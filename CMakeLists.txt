@@ -17,6 +17,11 @@ cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 
 project(CUDAX_SAMPLES CUDA CXX)
 
+# Check if CMAKE_BUILD_TYPE is set; if not, default to Release
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build." FORCE)
+endif()
+
 # This example uses the CMake Package Manager (CPM) to simplify fetching CCCL from GitHub
 # For more information, see https://github.com/cpm-cmake/CPM.cmake
 include(cmake/CPM.cmake)

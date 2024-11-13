@@ -1,10 +1,8 @@
 # Compiling
 
 ```bash
-mkdir build
-cd build
-cmake ..
-make
+cmake -S . -B build
+cmake --build build
 ```
 
 # 30 iterations of 200 GEMMs with 128x128 blocks.

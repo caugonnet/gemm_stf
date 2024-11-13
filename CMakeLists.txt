@@ -33,6 +33,8 @@ CPMAddPackage(
   GIT_TAG "main"
   # The following is required to make the `CCCL::cudax` target available:
   OPTIONS "CCCL_ENABLE_UNSTABLE ON"
+          "CCCL_ENABLE_CUDAX ON"
+          "CMAKE_PROJECT_CCCL_INCLUDE ${CMAKE_CURRENT_LIST_DIR}/cmake/cccl_setup.cmake"
 )
 
 # Default to building for the GPU on the current system
@@ -57,9 +59,11 @@ target_link_libraries(gemm_stf PRIVATE CCCL::CCCL CCCL::cudax)
 
 target_compile_definitions(gemm_stf PUBLIC $<$<CONFIG:Release>:NDEBUG>)
 
+# Work around CCCL not defining `CUDASTF_CODE_GENERATION` as an INTERFACE defintion on
+# the CCCL::cudax target
+target_compile_definitions(gemm_stf PUBLIC CUDASTF_CODE_GENERATION)
+
 find_package(CUDAToolkit REQUIRED)
 target_link_libraries(gemm_stf PRIVATE
       CUDA::cublas
 )
-
-
